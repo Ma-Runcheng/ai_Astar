@@ -11,6 +11,6 @@ public class test {
 
         ai.loadMap();
         ui.loadAlgorithm(ai);
-
+        System.out.println("pad");
     }
 }
