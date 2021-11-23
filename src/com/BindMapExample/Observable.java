@@ -1,4 +1,4 @@
-package com.BindMap;
+package com.BindMapExample;
 
 public interface Observable {
     void update(String status);

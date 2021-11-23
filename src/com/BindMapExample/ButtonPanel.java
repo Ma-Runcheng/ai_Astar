@@ -1,4 +1,4 @@
-package com.BindMap;
+package com.BindMapExample;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -12,7 +12,7 @@ public class ButtonPanel extends JPanel implements Observer{
     JButton roadBtn = new JButton("设置空路");
     JButton obstacleBtn = new JButton("设置障碍物");
     JButton fileBtn = new JButton("导出文件");
-    mapPanel mapPanel = null;
+    mapPanel mapPanel;
     int[][] map = null;
     public ButtonPanel(mapPanel mapPanel) {
         this.mapPanel = mapPanel;
@@ -40,7 +40,7 @@ public class ButtonPanel extends JPanel implements Observer{
             public void mouseClicked(MouseEvent e) {
                 if(check()){
                     File mat = new File("mat.txt");
-                    BufferedWriter bw = null;
+                    BufferedWriter bw;
                     try {
                         mat.createNewFile();
                         bw = new BufferedWriter(new FileWriter(mat));

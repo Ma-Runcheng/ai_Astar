@@ -1,4 +1,4 @@
-package com.BindMap;
+package com.BindMapExample;
 
 import javax.swing.*;
 import java.awt.*;
