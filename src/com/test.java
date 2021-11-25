@@ -8,7 +8,7 @@ public class test {
     public static void main(String[] args) {
         Astar ai = new AstarImpl();
         UI ui = new UI();
-
+        haha;
         ai.loadMap();
         ui.loadAlgorithm(ai);
     }
