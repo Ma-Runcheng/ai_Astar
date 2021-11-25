@@ -7,7 +7,7 @@ import java.util.Queue;
 
 public interface Astar {
     /*
-    map中 0----路-------灰色
+    map中 -1----路-------灰色
           1----障碍------红色
           2----结果路径-------蓝色
           3----搜索中路径cur------中心绿色

@@ -7,10 +7,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Objects;
 
 public class MapPanel extends JPanel {
     /*
-    map中 0----路-------灰色
+    map中 -1----路-------灰色
           1----障碍------红色
           2----结果路径-------蓝色
           3----搜索中路径cur------中心绿色
@@ -38,7 +39,7 @@ public class MapPanel extends JPanel {
     }
 
     public void loadMap(){
-        this.icon = new ImageIcon(getClass().getResource("/image/map.jpg"));
+        this.icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/image/map.jpg")));
         this.mapImg = icon.getImage();
     }
 
