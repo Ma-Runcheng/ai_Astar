@@ -37,6 +37,6 @@ public class ButtonPanel extends JPanel implements Observer{
 
     @Override
     public void Notify(Observable o,String status) {
-
+        o.update(status);
     }
 }

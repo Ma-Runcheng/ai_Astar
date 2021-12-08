@@ -19,8 +19,6 @@ class mapPanel extends JPanel implements Observable{
     }
 
 
-
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
