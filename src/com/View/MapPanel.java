@@ -18,12 +18,13 @@ public class MapPanel extends JPanel {
           3----搜索中路径cur------中心绿色
           4----cur的childs------分布在绿色周围黄色
           5----被选择状态------紫色
+          6----起始点和终点的颜色------黑色
      */
     ImageIcon icon = null;
     Image mapImg = null;
     Astar astar;
     MapInfo mapInfo;
-
+    int count=0;
     int posx,posy;  //此时选择的点的map数组坐标
     public MapPanel(Astar astar) {
         this.astar = astar;
@@ -34,29 +35,27 @@ public class MapPanel extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 //读取mapInfo坐标，实现标点，设置起始点，结束点
-                posx = round2(e.getX());//map[y][x]
-                posy = round(e.getY());
-                System.out.println(posx+" "+posy);
+                posx = roundx(e.getX());//map[y][x]
+                posy = roundy(e.getY());
+
+                if(mapInfo.map[posy][posx]==5){
+                    mapInfo.map[posy][posx]=-1;
+                    count--;
+                }else if(mapInfo.map[posy][posx]==-1){
+                    mapInfo.map[posy][posx]=5;
+                    count++;
+                }
+                repaint();
+
             }
         });
     }
 
-    private int round2(int y){
-
-        int m = y % 16;
-        int n=y/16;
-        if(m<8 ) {
-            return y = n;
-        }
-        else
-            return y=n+1;
+    private int roundx(int x){
+    return x/16;
     }
-    private int round(int x) {
-        int m = x % 19;
-        int n = x / 19;
-        if(m < 9.5){
-            return x =  n;
-        } else return x =  n + 1;
+    private int roundy(int y) {
+       return (int)(y/19.8);
     }
 
     public void loadMap(){
@@ -90,7 +89,10 @@ public class MapPanel extends JPanel {
                 if(map[i][j]==5){
                     g.setColor(Color.magenta);
                 }
-                g.fillRect(j*19,i*16,4,4);
+                if(map[i][j]==6){
+                    g.setColor(Color.black);
+                }
+                g.fillRect(j*16,(int)(i*19.8),8,8);
             }
         }
     }
@@ -99,14 +101,32 @@ public class MapPanel extends JPanel {
         this.astar = astar;
     }
 
-    public void setBegPos(){
+    public boolean setBegPos(){
         //给ai传起始点
         mapInfo.begNode = new Node(posx,posy);
+        mapInfo.map[posy][posx]=6;
+        if(count!=1){
+            JOptionPane.showMessageDialog(null, "不能找到起始点", "Title",JOptionPane.ERROR_MESSAGE);
+            repaint();
+            return false;
+        }
         astar.setMapInfo(mapInfo);
+        repaint();
+        count--;
+        return true;
     }
 
-    public void setEndPos(){
+    public boolean setEndPos(){
         mapInfo.endNode = new Node(posx,posy);
+        mapInfo.map[posy][posx]=6;
+        if(count!=1){
+            JOptionPane.showMessageDialog(null, "不能找到终点", "Title",JOptionPane.ERROR_MESSAGE);
+            repaint();
+            return false;
+        }
         astar.setMapInfo(mapInfo);
+        repaint();
+        count--;
+        return true;
     }
 }

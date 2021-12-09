@@ -55,9 +55,11 @@ public class ButtonPanel extends JPanel{
         @Override
         public void mouseClicked(MouseEvent e) {
             //设置起始点，调mapPanel
-
             super.mouseClicked(e);
-
+            if(mapPanel.setBegPos())
+                begin.setEnabled(false);
+            if(!begin.isEnabled()&&!end.isEnabled())
+                start.setEnabled(true);
         }
     }
 
@@ -66,7 +68,10 @@ public class ButtonPanel extends JPanel{
         public void mouseClicked(MouseEvent e) {
             //设置终点
             super.mouseClicked(e);
-
+            if(mapPanel.setEndPos())
+               end.setEnabled(false);
+            if(!begin.isEnabled()&&!end.isEnabled())
+                start.setEnabled(true);
         }
     }
 
@@ -76,7 +81,9 @@ public class ButtonPanel extends JPanel{
             //开始算法
 
             super.mouseClicked(e);
-
+            astar.start();
+            nextStep.setEnabled(true);
+            endStep.setEnabled(true);
         }
     }
 
@@ -86,7 +93,12 @@ public class ButtonPanel extends JPanel{
             //下一步，通知mapPanel重绘,判断是否到重点，到重点则展现完成路径
             //调nextStep，更新List
             super.mouseClicked(e);
-
+            mapPanel.repaint();
+            if(Astar.isEnd){
+                astar.setRoute();
+            }
+            astar.nextStep();
+            listPanel.updateData();
         }
     }
 
@@ -95,7 +107,10 @@ public class ButtonPanel extends JPanel{
         public void mouseClicked(MouseEvent e) {
             //直接展示完整路径
             super.mouseClicked(e);
-
+            astar.goEnd();
+            astar.setRoute();
+            nextStep.setEnabled(false);
+            endStep.setEnabled(false);
         }
     }
 }
