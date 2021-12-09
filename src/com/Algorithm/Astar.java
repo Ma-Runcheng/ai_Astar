@@ -13,6 +13,7 @@ public interface Astar {
           3----搜索中路径cur------中心绿色
           4----cur的childs------分布在绿色周围黄色
           5----被选择状态------紫色
+          6----起始点和终点颜色------黑色
      */
     Queue<Node> openList = null;
     List<Node> closeList = null;

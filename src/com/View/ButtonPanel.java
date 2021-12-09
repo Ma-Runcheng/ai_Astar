@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class ButtonPanel extends JPanel{
+public class ButtonPanel extends JPanel implements Observer{
     Astar astar;
     ListPanel listPanel;
     MapPanel mapPanel;
@@ -51,6 +51,11 @@ public class ButtonPanel extends JPanel{
         this.astar = astar;
     }
 
+    @Override
+    public void Notify() {
+        mapPanel.update();
+    }
+
     private class beginListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -79,7 +84,6 @@ public class ButtonPanel extends JPanel{
         @Override
         public void mouseClicked(MouseEvent e) {
             //开始算法
-
             super.mouseClicked(e);
             astar.start();
             nextStep.setEnabled(true);
@@ -95,7 +99,9 @@ public class ButtonPanel extends JPanel{
             super.mouseClicked(e);
             mapPanel.repaint();
             if(Astar.isEnd){
+                astar.goEnd();
                 astar.setRoute();
+                Notify();
             }
             astar.nextStep();
             listPanel.updateData();
@@ -111,6 +117,7 @@ public class ButtonPanel extends JPanel{
             astar.setRoute();
             nextStep.setEnabled(false);
             endStep.setEnabled(false);
+            Notify();
         }
     }
 }

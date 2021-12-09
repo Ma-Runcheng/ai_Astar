@@ -9,7 +9,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.Queue;
 
-public class ListPanel extends JPanel {
+public class ListPanel extends JPanel{
     Astar astar;
     public JTable table;
     public JScrollPane scrollPane;

@@ -3,6 +3,7 @@ package com.View;
 import com.Algorithm.Astar;
 import com.Algorithm.MapInfo;
 import com.Algorithm.Node;
+import com.Observable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
 
-public class MapPanel extends JPanel {
+public class MapPanel extends JPanel implements Observable {
     /*
     map中 -1----路-------灰色
           1----障碍------红色
@@ -128,5 +129,11 @@ public class MapPanel extends JPanel {
         repaint();
         count--;
         return true;
+    }
+
+    @Override
+    public void update() {
+        this.mapInfo = astar.getMapInfo();
+        this.repaint();
     }
 }
