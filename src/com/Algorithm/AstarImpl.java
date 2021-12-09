@@ -18,7 +18,7 @@ public class AstarImpl implements Astar {
     @Override
     public void loadMap() {
         BufferedReader bufferedReader;
-        int[][] map = new int[69][32];
+        int[][] map = new int[70][40];
         try{
             File file = new File("mat.txt");
             InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(file));
@@ -34,6 +34,12 @@ public class AstarImpl implements Astar {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        for (int i = 0; i < 70; i++) {
+            for (int j = 0; j < 40; j++) {
+                System.out.print(map[i][j]+",");
+            }
+            System.out.println("");
         }
         mapInfo = new MapInfo(map);
     }
@@ -60,7 +66,7 @@ public class AstarImpl implements Astar {
 
     @Override
     public MapInfo getMapInfo() {
-        return null;
+        return mapInfo;
     }
 
     @Override

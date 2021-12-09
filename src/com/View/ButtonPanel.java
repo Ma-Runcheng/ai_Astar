@@ -55,6 +55,7 @@ public class ButtonPanel extends JPanel{
         @Override
         public void mouseClicked(MouseEvent e) {
             //设置起始点，调mapPanel
+
             super.mouseClicked(e);
 
         }
@@ -73,6 +74,7 @@ public class ButtonPanel extends JPanel{
         @Override
         public void mouseClicked(MouseEvent e) {
             //开始算法
+
             super.mouseClicked(e);
 
         }
