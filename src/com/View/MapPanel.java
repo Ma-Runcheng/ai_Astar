@@ -53,7 +53,7 @@ public class MapPanel extends JPanel implements Observable {
     }
 
     private int roundx(int x){
-    return x/16;
+        return x/16;
     }
     private int roundy(int y) {
        return (int)(y/19.8);
@@ -104,7 +104,7 @@ public class MapPanel extends JPanel implements Observable {
 
     public boolean setBegPos(){
         //给ai传起始点
-        mapInfo.begNode = new Node(posx,posy);
+        mapInfo.begNode = new Node(posy,posx);
         mapInfo.map[posy][posx]=6;
         if(count!=1){
             JOptionPane.showMessageDialog(null, "不能找到起始点", "Title",JOptionPane.ERROR_MESSAGE);
@@ -118,7 +118,7 @@ public class MapPanel extends JPanel implements Observable {
     }
 
     public boolean setEndPos(){
-        mapInfo.endNode = new Node(posx,posy);
+        mapInfo.endNode = new Node(posy,posx);
         mapInfo.map[posy][posx]=6;
         if(count!=1){
             JOptionPane.showMessageDialog(null, "不能找到终点", "Title",JOptionPane.ERROR_MESSAGE);

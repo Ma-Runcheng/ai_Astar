@@ -24,20 +24,20 @@ public class Node implements Comparable{
         this.F = this.G + this.H;
     }
 
-    public void setH(Node endPos, int value){
+    public void setH(Node endPos){
         int x, y;
         x = (endPos.pos.x > this.pos.x) ? (endPos.pos.x - this.pos.x) : (this.pos.x - endPos.pos.x);
         y = (endPos.pos.y > this.pos.y) ? (endPos.pos.y - this.pos.y) : (this.pos.y - endPos.pos.y);
-        this.H  = (x + y) * value;
+        this.H  = Math.max(x,y);
     }
 
     @Override
     public int compareTo(Object o) {
         Node n = (Node) o;
         if(n == null) return -1;
-        if (this.G + this.H > n.G + n.H)
+        if (this.F > n.F)
             return 1;
-        else if (this.G + this.H < n.G + n.H)
+        else if (this.F < n.F)
             return -1;
         return 0;
     }

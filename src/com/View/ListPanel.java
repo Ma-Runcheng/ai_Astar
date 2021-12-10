@@ -6,6 +6,7 @@ import com.Observer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Queue;
 
@@ -27,10 +28,13 @@ public class ListPanel extends JPanel{
     }
 
     void updateData(){
-        openList = astar.openList;
-        closeList = astar.closeList;
+        openList = astar.getOpenList();
+        closeList = astar.getCloseList();
         int index = 0;
-        for(Node node : openList){
+        Object[] open = openList.toArray();
+        Arrays.sort(open);
+        for(Object Node : open){
+            Node node = (Node) Node;
             String nodePos = "("+node.pos.x+","+node.pos.y+")"+"  F= "+node.F;
             table.getModel().setValueAt(nodePos,index++,0);
         }

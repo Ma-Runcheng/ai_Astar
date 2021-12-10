@@ -15,10 +15,7 @@ public interface Astar {
           5----被选择状态------紫色
           6----起始点和终点颜色------黑色
      */
-    Queue<Node> openList = null;
-    List<Node> closeList = null;
     MapInfo mapInfo = null;
-    boolean isEnd = false;
 
     void setMapInfo(MapInfo mapInfo);
     MapInfo getMapInfo();
@@ -31,4 +28,5 @@ public interface Astar {
     boolean goEnd(); //直接走完算法，可以到重点 -- true，无法到达--false
 
     void setRoute(); //改变mapInfo并通知界面
+    boolean isEnd();
 }

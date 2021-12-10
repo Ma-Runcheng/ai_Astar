@@ -98,12 +98,15 @@ public class ButtonPanel extends JPanel implements Observer{
             //调nextStep，更新List
             super.mouseClicked(e);
             mapPanel.repaint();
-            if(Astar.isEnd){
+            if(astar.isEnd()){
                 astar.goEnd();
                 astar.setRoute();
                 Notify();
+            }else{
+                astar.nextStep();
+                Notify();
             }
-            astar.nextStep();
+
             listPanel.updateData();
         }
     }
