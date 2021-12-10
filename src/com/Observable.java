@@ -1,5 +1,6 @@
 package com;
 
 public interface Observable {
-    void update();
+    void Notify();
+    void register(Observer o);
 }

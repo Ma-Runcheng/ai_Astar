@@ -1,25 +1,33 @@
 package com.Algorithm;
 
+import com.Observer;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
 
-public class AstarImpl implements Astar {
+public class AstarImpl1 implements Astar {
     MapInfo mapInfo = null;
     boolean isEnd = false;
-    int[] dirx = new int[]{0,0,1,-1};
-    int[] diry = new int[]{1,-1,0,0};
+    boolean canFind = true;
+    int[] dirx = new int[]{0,0,1,-1,1,1,-1,-1};
+    int[] diry = new int[]{1,-1,0,0,1,-1,1,-1};
     Node begNode = null;
     Node endNode = null;
     Node finalNode = null;
     Queue<Node> openList = null;
     List<Node> closeList = null;
     List<Node> routeList = null;
+
+
+    List<Observer> observers = new ArrayList<>();
+
+    public AstarImpl1() {
+        openList = new PriorityQueue<>();
+        closeList = new ArrayList<>();
+    }
 
     @Override
     public void loadMap() {
@@ -44,12 +52,10 @@ public class AstarImpl implements Astar {
         this.mapInfo = new MapInfo(map);
     }
 
-
-
     @Override
     public void start() {
-        openList = new PriorityQueue<>();
-        closeList = new ArrayList<>();
+        openList.clear();
+        closeList.clear();
         this.begNode = mapInfo.begNode;
         this.endNode = mapInfo.endNode;
         begNode.G = 0;
@@ -60,17 +66,23 @@ public class AstarImpl implements Astar {
 
     @Override
     public void nextStep() {
+        if(openList.isEmpty()){
+            canFind = false;
+            Notify();
+            return ;
+        }
         Node curNode = openList.poll();
-        closeList.add(curNode);
         mapInfo.map[curNode.pos.x][curNode.pos.y] = 3;
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 8; i++) {
             Node child = new Node(curNode.pos.x+dirx[i],curNode.pos.y+diry[i]);
             if(!isCanAddIntoOpen(child)) continue;
             mapInfo.map[child.pos.x][child.pos.y] = 4;
-            child.G += 10;
+            if(i < 4) child.G += 10;
+            else child.G += 14;
             child.setH(endNode);
             child.setF();
             child.parent = curNode;
+
             openList.add(child);
 
             if(child.equals(endNode)){
@@ -80,27 +92,31 @@ public class AstarImpl implements Astar {
                 break;
             }
         }
-        openList.poll();
+        closeList.add(curNode);
+        Notify();
     }
 
     private boolean isCanAddIntoOpen(Node child) {
-        if(mapInfo.map[child.pos.x][child.pos.y] == 1) {
+        if(child.pos.x < 0 || child.pos.x >= 70 ||child.pos.y < 0 || child.pos.y >= 40) {
             return false;
-        } else if(child.pos.x < 0 || child.pos.x >= 40 ||child.pos.y < 0 || child.pos.y >= 70){
+        } else if(mapInfo.map[child.pos.x][child.pos.y] == 1){
             return false;
-        }else if(openList.contains(child)){
+        }
+
+        if(openList.contains(child)){
             return false;
-        }else if(closeList.contains(child)){
+        }
+        if(closeList.contains(child)){
             return false;
         }
         return true;
     }
 
     private boolean isCanAddIntoClose(Node child) {
-        if(mapInfo.map[child.pos.x][child.pos.y] == 1)
+        if(child.pos.x < 0 || child.pos.x >= 70 ||child.pos.y < 0 || child.pos.y >= 40)
         {
             return false;
-        } else if(child.pos.x < 0 || child.pos.x >= 40 ||child.pos.y < 0 || child.pos.y >= 70){
+        } else if(mapInfo.map[child.pos.x][child.pos.y] == 1){
             return false;
         }else if(closeList.contains(child)){
             return false;
@@ -108,16 +124,32 @@ public class AstarImpl implements Astar {
         return true;
     }
 
-
     @Override
     public boolean goEnd() {
         while(!openList.isEmpty()){
             nextStep();
             if(isEnd){
-                return true;
+                break;
             }
         }
-        return false;
+        return isEnd;
+    }
+
+    @Override
+    public boolean canFind() {
+        return canFind;
+    }
+
+    @Override
+    public void restart() {
+        loadMap();
+        canFind = true;
+        isEnd = false;
+        mapInfo.begNode = null;
+        mapInfo.endNode = null;
+        openList.clear();
+        closeList.clear();
+        Notify();
     }
 
     @Override
@@ -156,4 +188,18 @@ public class AstarImpl implements Astar {
         return isEnd;
     }
 
+
+    @Override
+    public void Notify() {
+        for(Observer o : observers){
+            o.update();
+        }
+    }
+
+    @Override
+    public void register(Observer o) {
+        if(!observers.contains(o)){
+            observers.add(o);
+        }
+    }
 }

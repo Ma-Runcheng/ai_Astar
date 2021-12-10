@@ -1,12 +1,13 @@
 package com;
 
+import com.Algorithm.AiFactory;
 import com.Algorithm.Astar;
-import com.Algorithm.AstarImpl;
 import com.View.UI;
 
 public class test {
     public static void main(String[] args) {
-        Astar ai = new AstarImpl();
+        AiFactory factory = new AiFactory();
+        Astar ai = factory.getAi("对角距离");
         ai.loadMap();
 
         UI ui = new UI();

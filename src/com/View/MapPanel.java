@@ -4,6 +4,7 @@ import com.Algorithm.Astar;
 import com.Algorithm.MapInfo;
 import com.Algorithm.Node;
 import com.Observable;
+import com.Observer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
 
-public class MapPanel extends JPanel implements Observable {
+public class MapPanel extends JPanel implements Observer {
     /*
     map中 -1----路-------灰色
           1----障碍------红色
@@ -30,6 +31,7 @@ public class MapPanel extends JPanel implements Observable {
     public MapPanel(Astar astar) {
         this.astar = astar;
         this.mapInfo = astar.getMapInfo();
+        astar.register(this);
         loadMap();
 
         addMouseListener(new MouseAdapter() {
@@ -39,11 +41,11 @@ public class MapPanel extends JPanel implements Observable {
                 posx = roundx(e.getX());//map[y][x]
                 posy = roundy(e.getY());
 
-                if(mapInfo.map[posy][posx]==5){
-                    mapInfo.map[posy][posx]=-1;
+                if(mapInfo.map[posy][posx] == 5){
+                    mapInfo.map[posy][posx] = -1;
                     count--;
-                }else if(mapInfo.map[posy][posx]==-1){
-                    mapInfo.map[posy][posx]=5;
+                }else if(mapInfo.map[posy][posx] == -1){
+                    mapInfo.map[posy][posx] = 5;
                     count++;
                 }
                 repaint();
@@ -62,6 +64,11 @@ public class MapPanel extends JPanel implements Observable {
     public void loadMap(){
         this.icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/image/map.jpg")));
         this.mapImg = icon.getImage();
+    }
+
+    public void restart(){
+        this.mapInfo = astar.getMapInfo();
+        update();
     }
 
     @Override
@@ -93,24 +100,25 @@ public class MapPanel extends JPanel implements Observable {
                 if(map[i][j]==6){
                     g.setColor(Color.black);
                 }
-                g.fillRect(j*16,(int)(i*19.8),8,8);
+                g.fillRect(j*16,(int)(i*19.8),10,10);
             }
         }
     }
 
     public void setAstar(Astar astar) {
         this.astar = astar;
+        astar.register(this);
     }
 
     public boolean setBegPos(){
         //给ai传起始点
         mapInfo.begNode = new Node(posy,posx);
-        mapInfo.map[posy][posx]=6;
         if(count!=1){
             JOptionPane.showMessageDialog(null, "不能找到起始点", "Title",JOptionPane.ERROR_MESSAGE);
             repaint();
             return false;
         }
+        mapInfo.map[posy][posx]=6;
         astar.setMapInfo(mapInfo);
         repaint();
         count--;
@@ -119,12 +127,12 @@ public class MapPanel extends JPanel implements Observable {
 
     public boolean setEndPos(){
         mapInfo.endNode = new Node(posy,posx);
-        mapInfo.map[posy][posx]=6;
         if(count!=1){
             JOptionPane.showMessageDialog(null, "不能找到终点", "Title",JOptionPane.ERROR_MESSAGE);
             repaint();
             return false;
         }
+        mapInfo.map[posy][posx]=6;
         astar.setMapInfo(mapInfo);
         repaint();
         count--;
@@ -133,7 +141,6 @@ public class MapPanel extends JPanel implements Observable {
 
     @Override
     public void update() {
-        this.mapInfo = astar.getMapInfo();
-        this.repaint();
+        repaint();
     }
 }

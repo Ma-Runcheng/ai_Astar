@@ -7,11 +7,17 @@ import com.Observer;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.*;
+import java.util.Timer;
 
-public class ButtonPanel extends JPanel implements Observer{
+
+public class ButtonPanel extends JPanel implements Observable{
     Astar astar;
     ListPanel listPanel;
     MapPanel mapPanel;
+    List<Observer> observers = new ArrayList<>();
 
     JButton begin = new JButton("确定起始位置");
     JButton end = new JButton("确定终点位置");
@@ -51,10 +57,28 @@ public class ButtonPanel extends JPanel implements Observer{
         this.astar = astar;
     }
 
+    public void restart(){
+        begin.setEnabled(true);
+        end.setEnabled(true);
+        start.setEnabled(false);
+        nextStep.setEnabled(false);
+        endStep.setEnabled(false);
+    }
+
     @Override
     public void Notify() {
-        mapPanel.update();
+        for(Observer o : observers){
+            o.update();
+        }
     }
+
+    @Override
+    public void register(Observer o) {
+        if(!observers.contains(o)){
+            observers.add(o);
+        }
+    }
+
 
     private class beginListener extends MouseAdapter {
         @Override
@@ -88,6 +112,7 @@ public class ButtonPanel extends JPanel implements Observer{
             astar.start();
             nextStep.setEnabled(true);
             endStep.setEnabled(true);
+            listPanel.update();
         }
     }
 
@@ -97,17 +122,17 @@ public class ButtonPanel extends JPanel implements Observer{
             //下一步，通知mapPanel重绘,判断是否到重点，到重点则展现完成路径
             //调nextStep，更新List
             super.mouseClicked(e);
-            mapPanel.repaint();
-            if(astar.isEnd()){
+            if(!astar.canFind()){
+                JOptionPane.showMessageDialog(null,"找不到路径");
+            }else if(astar.isEnd()){
                 astar.goEnd();
                 astar.setRoute();
-                Notify();
+                nextStep.setEnabled(false);
+                endStep.setEnabled(false);
             }else{
                 astar.nextStep();
-                Notify();
             }
-
-            listPanel.updateData();
+            Notify();
         }
     }
 
@@ -116,8 +141,11 @@ public class ButtonPanel extends JPanel implements Observer{
         public void mouseClicked(MouseEvent e) {
             //直接展示完整路径
             super.mouseClicked(e);
-            astar.goEnd();
-            astar.setRoute();
+            if(astar.goEnd()){
+                astar.setRoute();
+            }else{
+                JOptionPane.showMessageDialog(null,"找不到路径");
+            }
             nextStep.setEnabled(false);
             endStep.setEnabled(false);
             Notify();

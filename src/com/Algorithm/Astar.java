@@ -5,7 +5,7 @@ import com.Observable;
 import java.util.List;
 import java.util.Queue;
 
-public interface Astar {
+public interface Astar extends Observable{
     /*
     map中 -1----路-------灰色
           1----障碍------红色
@@ -29,4 +29,7 @@ public interface Astar {
 
     void setRoute(); //改变mapInfo并通知界面
     boolean isEnd();
+    boolean canFind();
+
+    void restart();
 }
