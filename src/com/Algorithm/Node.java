@@ -25,16 +25,27 @@ public class Node implements Comparable{
     }
 
     /**
-     * 可走对角线
+     * 对角线距离，可走对角线
      * @param endPos
      */
-    public void setH(Node endPos){
+    public void setDiagonalH(Node endPos){
         int x, y;
         x = (endPos.pos.x > this.pos.x) ? (endPos.pos.x - this.pos.x) : (this.pos.x - endPos.pos.x);
         y = (endPos.pos.y > this.pos.y) ? (endPos.pos.y - this.pos.y) : (this.pos.y - endPos.pos.y);
         int diagonal = Math.min(x,y);//对角步数
         int straight = x +y;//曼哈顿距离
         this.H  = 14 * diagonal + 10 * (straight - 2 * diagonal);
+    }
+
+    /**
+     * Manhattan距离，不可走对角线
+     * @param endPos
+     */
+    public void setManhattanH(Node endPos){
+        int x, y;
+        x = (endPos.pos.x > this.pos.x) ? (endPos.pos.x - this.pos.x) : (this.pos.x - endPos.pos.x);
+        y = (endPos.pos.y > this.pos.y) ? (endPos.pos.y - this.pos.y) : (this.pos.y - endPos.pos.y);
+        this.H = (x + y) * 10;
     }
 
     @Override

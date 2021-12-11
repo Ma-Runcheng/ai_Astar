@@ -42,12 +42,12 @@ public class AstarImpl3 implements Astar {
     }
 
     @Override
-    public boolean goEnd() {
-        return false;
+    public void goEnd() {
+
     }
 
     @Override
-    public void setRoute() {
+    public void setRoute(Node finalNode) {
 
     }
 

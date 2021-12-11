@@ -110,6 +110,7 @@ public class ButtonPanel extends JPanel implements Observable{
             //开始算法
             super.mouseClicked(e);
             astar.start();
+            start.setEnabled(false);
             nextStep.setEnabled(true);
             endStep.setEnabled(true);
             listPanel.update();
@@ -126,7 +127,6 @@ public class ButtonPanel extends JPanel implements Observable{
                 JOptionPane.showMessageDialog(null,"找不到路径");
             }else if(astar.isEnd()){
                 astar.goEnd();
-                astar.setRoute();
                 nextStep.setEnabled(false);
                 endStep.setEnabled(false);
             }else{
@@ -141,13 +141,11 @@ public class ButtonPanel extends JPanel implements Observable{
         public void mouseClicked(MouseEvent e) {
             //直接展示完整路径
             super.mouseClicked(e);
-            if(astar.goEnd()){
-                astar.setRoute();
-            }else{
-                JOptionPane.showMessageDialog(null,"找不到路径");
-            }
+            astar.goEnd();
             nextStep.setEnabled(false);
             endStep.setEnabled(false);
+            begin.setEnabled(true);
+            end.setEnabled(true);
             Notify();
         }
     }

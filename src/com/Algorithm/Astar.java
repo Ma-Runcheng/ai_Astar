@@ -16,7 +16,6 @@ public interface Astar extends Observable{
           6----起始点和终点颜色------黑色
      */
     MapInfo mapInfo = null;
-
     void setMapInfo(MapInfo mapInfo);
     MapInfo getMapInfo();
     Queue<Node> getOpenList();
@@ -25,9 +24,9 @@ public interface Astar extends Observable{
     void loadMap();
     void start(); //算法入口
     void nextStep(); //下一步搜索更新open，close表
-    boolean goEnd(); //直接走完算法，可以到重点 -- true，无法到达--false
+    void goEnd(); //直接走完算法，可以到重点 -- true，无法到达--false
 
-    void setRoute(); //改变mapInfo并通知界面
+    void setRoute(Node finalNode); //改变mapInfo并通知界面
     boolean isEnd();
     boolean canFind();
 

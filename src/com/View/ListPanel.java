@@ -15,7 +15,7 @@ public class ListPanel extends JPanel implements Observer{
     public JTable table;
     public JScrollPane scrollPane;
     Object[] head = {"OpenList","CloseList"};
-    Object[][] rowData =  new Object[400][400];
+    Object[][] rowData =  new Object[2800][2800];
     List<Node> closeList = null;
     Queue<Node> openList = null;
 

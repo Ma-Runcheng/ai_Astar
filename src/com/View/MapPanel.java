@@ -28,6 +28,8 @@ public class MapPanel extends JPanel implements Observer {
     MapInfo mapInfo;
     int count=0;
     int posx,posy;  //此时选择的点的map数组坐标
+    boolean showGrid = true;
+
     public MapPanel(Astar astar) {
         this.astar = astar;
         this.mapInfo = astar.getMapInfo();
@@ -44,7 +46,7 @@ public class MapPanel extends JPanel implements Observer {
                 if(mapInfo.map[posy][posx] == 5){
                     mapInfo.map[posy][posx] = -1;
                     count--;
-                }else if(mapInfo.map[posy][posx] == -1){
+                }else if(mapInfo.map[posy][posx] != 1){
                     mapInfo.map[posy][posx] = 5;
                     count++;
                 }
@@ -79,28 +81,34 @@ public class MapPanel extends JPanel implements Observer {
         int[][] map = mapInfo.map;
         for (int i = 0; i < mapInfo.ROWS; i++) {
             for (int j = 0; j < mapInfo.COLS; j++) {
-                if(map[i][j] == 1){
+                if(map[i][j] == 1 && showGrid){
                     g.setColor(Color.red);
+                    g.fillRect(j*16,(int)(i*19.8),10,10);
                 }
-                if(map[i][j]==-1){
+                if(map[i][j]==-1 && showGrid){
                     g.setColor(Color.gray);
+                    g.fillRect(j*16,(int)(i*19.8),10,10);
                 }
                 if(map[i][j]==2){
                     g.setColor(Color.blue);
+                    g.fillRect(j*16,(int)(i*19.8),10,10);
                 }
                 if(map[i][j]==3){
                     g.setColor(Color.green);
+                    g.fillRect(j*16,(int)(i*19.8),10,10);
                 }
                 if(map[i][j]==4){
                     g.setColor(Color.yellow);
+                    g.fillRect(j*16,(int)(i*19.8),10,10);
                 }
                 if(map[i][j]==5){
                     g.setColor(Color.magenta);
+                    g.fillRect(j*16,(int)(i*19.8),10,10);
                 }
                 if(map[i][j]==6){
                     g.setColor(Color.black);
+                    g.fillRect(j*16,(int)(i*19.8),10,10);
                 }
-                g.fillRect(j*16,(int)(i*19.8),10,10);
             }
         }
     }

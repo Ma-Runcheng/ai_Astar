@@ -8,6 +8,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class UI extends JFrame {
     public static final int WIDTH = 1150;
@@ -19,6 +23,9 @@ public class UI extends JFrame {
     public Astar astar = null;
     public MapInfo mapInfo = null;
     private JMenuBar menuBar = null;
+    Set<Astar> usedAstar = new HashSet<>();
+    AiFactory factory = new AiFactory();
+
 
     public UI(){
         setSize(WIDTH,HEIGHT);
@@ -29,6 +36,7 @@ public class UI extends JFrame {
 
     public void loadAlgorithm(Astar astar){
         this.astar = astar;
+        usedAstar.add(astar);
         this.mapInfo = astar.mapInfo;
         init();
         setVisible(true);
@@ -48,6 +56,8 @@ public class UI extends JFrame {
 
     public void setAstar(Astar astar) {
         this.astar = astar;
+        usedAstar.add(astar);
+
         mapPanel.setAstar(astar);
         btnPanel.setAstar(astar);
         listPanel.setAstar(astar);
@@ -55,22 +65,35 @@ public class UI extends JFrame {
 
     public void initMenuBar(JMenuBar menuBar){
         this.menuBar = menuBar;
+
         ActionListener al = new AloSelectListener();
         ActionListener sl = new startListener();
+        ActionListener gl = new gridListener();
+
         JMenu algorithmMenu = new JMenu("算法选择");
         JMenu optionMenu= new JMenu("选项");
+
         JMenuItem item1 = new JMenuItem("对角距离");
         JMenuItem item2 = new JMenuItem("曼哈顿距离");
         JMenuItem item3 = new JMenuItem("迪杰斯特拉");
+        JMenuItem item4 = new JMenuItem("双向对角");
         JMenuItem restart = new JMenuItem("重新开始");
+        JMenuItem showGrid = new JMenuItem("显示/隐藏栅格");
+
         algorithmMenu.add(item1);
         algorithmMenu.add(item2);
         algorithmMenu.add(item3);
+        algorithmMenu.add(item4);
         optionMenu.add(restart);
+        optionMenu.add(showGrid);
+
         item1.addActionListener(al);
         item2.addActionListener(al);
         item3.addActionListener(al);
+        item4.addActionListener(al);
         restart.addActionListener(sl);
+        showGrid.addActionListener(gl);
+
         this.menuBar.add(algorithmMenu);
         this.menuBar.add(optionMenu);
     }
@@ -79,18 +102,31 @@ public class UI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             JMenuItem item = (JMenuItem) e.getSource();
-            AiFactory factory = new AiFactory();
             String type = item.getText();
             setAstar(factory.getAi(type));
+            astar.restart();
+            btnPanel.restart();
         }
     }
 
     class startListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            astar.restart();
+            for(Astar a : usedAstar){
+                a.restart();
+            }
+            usedAstar.clear();
+            setAstar(factory.getAi("对角距离"));
             btnPanel.restart();
             mapPanel.restart();
+        }
+    }
+
+    class gridListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            mapPanel.showGrid = !mapPanel.showGrid;
+            mapPanel.update();
         }
     }
 
