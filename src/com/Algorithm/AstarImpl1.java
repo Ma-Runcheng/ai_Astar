@@ -17,10 +17,8 @@ public class AstarImpl1 implements Astar {
     int[] diry = new int[]{1,-1,0,0,1,-1,1,-1};
     Node begNode = null;
     Node endNode = null;
-    Node finalNode = null;
-    Queue<Node> openList = null;
-    List<Node> closeList = null;
-    List<Node> routeList = null;
+    Queue<Node> openList;
+    List<Node> closeList;
     long usedTime = 0;
     int spend = 0;
 
@@ -123,18 +121,6 @@ public class AstarImpl1 implements Astar {
         return true;
     }
 
-    private boolean isCanAddIntoClose(Node child) {
-        if(child.pos.x < 0 || child.pos.x >= 70 ||child.pos.y < 0 || child.pos.y >= 40)
-        {
-            return false;
-        } else if(mapInfo.map[child.pos.x][child.pos.y] == 1){
-            return false;
-        }else if(closeList.contains(child)){
-            return false;
-        }
-        return true;
-    }
-
     @Override
     public void goEnd() {
         Thread thread = new Thread(() -> {
@@ -197,7 +183,6 @@ public class AstarImpl1 implements Astar {
     @Override
     public void setRoute(Node finalNode) {
         Node cur = finalNode;
-        routeList = new ArrayList<>();
         while(cur != null){
             mapInfo.map[cur.pos.x][cur.pos.y] = 2;
             if(cur.parent != null){
@@ -207,7 +192,6 @@ public class AstarImpl1 implements Astar {
                     spend += 10;
                 }
             }
-            routeList.add(cur);
             cur = cur.parent;
         }
     }

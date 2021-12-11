@@ -2,7 +2,7 @@ package com.Algorithm;
 
 import java.awt.*;
 
-public class Node implements Comparable{
+public class Node implements Comparable<Node>{
 
     public Point pos;
     public Node parent;
@@ -26,7 +26,6 @@ public class Node implements Comparable{
 
     /**
      * 对角线距离，可走对角线
-     * @param endPos
      */
     public void setDiagonalH(Node endPos){
         int x, y;
@@ -39,7 +38,6 @@ public class Node implements Comparable{
 
     /**
      * Manhattan距离，不可走对角线
-     * @param endPos
      */
     public void setManhattanH(Node endPos){
         int x, y;
@@ -49,20 +47,23 @@ public class Node implements Comparable{
     }
 
     @Override
-    public int compareTo(Object o) {
-        Node n = (Node) o;
+    public boolean equals(Object obj) {
+        if(obj instanceof Node){
+            Node node = (Node) obj;
+            return node.pos.equals(this.pos);
+        }else{
+            return false;
+        }
+    }
+
+    @Override
+    public int compareTo(Node n) {
         if(n == null) return -1;
         if (this.F > n.F)
             return 1;
         else if (this.F < n.F)
             return -1;
         return 0;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        Node node = (Node) obj;
-        return node.pos.equals(this.pos);
     }
 }
 

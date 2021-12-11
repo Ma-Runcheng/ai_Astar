@@ -20,13 +20,12 @@ public class AstarImpl4 implements Astar{
     int[] diry = new int[]{1,-1,0,0,1,-1,1,-1};
     Node begNode = null;
     Node endNode = null;
-    Queue<Node> openList = null;
-    Queue<Node> o1 = null;
-    Queue<Node> o2 = null;
-    List<Node> closeList = null;
-    List<Node> close1 = null;
-    List<Node> close2 = null;
-    List<Node> routeList = null;
+    Queue<Node> openList;
+    Queue<Node> o1;
+    Queue<Node> o2;
+    List<Node> closeList;
+    List<Node> close1;
+    List<Node> close2;
     long usedTime = 0;
     int spend = 0;
 
@@ -94,6 +93,7 @@ public class AstarImpl4 implements Astar{
         begNode.setDiagonalH(endNode);
         begNode.setF();
         openList.add(begNode);
+        openList.add(endNode);
         o1.add(begNode);
         o2.add(endNode);
     }

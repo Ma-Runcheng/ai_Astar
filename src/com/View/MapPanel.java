@@ -3,7 +3,6 @@ package com.View;
 import com.Algorithm.Astar;
 import com.Algorithm.MapInfo;
 import com.Algorithm.Node;
-import com.Observable;
 import com.Observer;
 
 import javax.swing.*;
@@ -18,7 +17,7 @@ public class MapPanel extends JPanel implements Observer {
           1----障碍------红色
           2----结果路径-------蓝色
           3----搜索中路径cur------中心绿色
-          4----cur的childs------分布在绿色周围黄色
+          4----cur的children------分布在绿色周围黄色
           5----被选择状态------紫色
           6----起始点和终点的颜色------黑色
      */
@@ -40,8 +39,8 @@ public class MapPanel extends JPanel implements Observer {
             @Override
             public void mouseClicked(MouseEvent e) {
                 //读取mapInfo坐标，实现标点，设置起始点，结束点
-                posx = roundx(e.getX());//map[y][x]
-                posy = roundy(e.getY());
+                posx = roundX(e.getX());//map[y][x]
+                posy = roundY(e.getY());
 
                 if(mapInfo.map[posy][posx] == 5){
                     mapInfo.map[posy][posx] = -1;
@@ -56,10 +55,10 @@ public class MapPanel extends JPanel implements Observer {
         });
     }
 
-    private int roundx(int x){
+    private int roundX(int x){
         return x/16;
     }
-    private int roundy(int y) {
+    private int roundY(int y) {
        return (int)(y/19.8);
     }
 

@@ -9,8 +9,8 @@ public class ButtonPanel extends JPanel{
     JButton roadBtn = new JButton("设置空路");
     JButton obstacleBtn = new JButton("设置障碍物");
     JButton fileBtn = new JButton("导出文件");
-    mapPanel mapPanel = null;
-    int[][] map = null;
+    mapPanel mapPanel;
+    int[][] map;
 
     public ButtonPanel(mapPanel mapPanel) {
         this.mapPanel = mapPanel;
@@ -37,11 +37,13 @@ public class ButtonPanel extends JPanel{
             @Override
             public void mouseClicked(MouseEvent e) {
                 File file = new File("mat.txt");
-                BufferedWriter bw = null;
+                BufferedWriter bw;
                 try {
                     bw = new BufferedWriter(new FileWriter(file));
                     if(!file.exists()){
-                        file.createNewFile();
+                        boolean res = file.createNewFile();
+                        if(res) System.out.println("文件生成成功");
+                        else System.out.println("文件生成失败");
                     }
                     if(check()){
                         for(int i = 0; i < 70; i++){
