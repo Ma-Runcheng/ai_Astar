@@ -8,9 +8,9 @@ public class test {
     public static void main(String[] args) {
         AiFactory factory = new AiFactory();
         Astar ai = factory.getAi("对角距离");
-        ai.loadMap();
+        ai.loadMap("mat1.txt");
 
-        UI ui = new UI();
-        ui.loadAlgorithm(ai);
+        UI ui = new UI(ai);
+        ui.mapInfo = ai.getMapInfo();
     }
 }

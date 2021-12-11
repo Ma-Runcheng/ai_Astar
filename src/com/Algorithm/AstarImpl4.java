@@ -7,10 +7,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
 
 public class AstarImpl4 implements Astar{
     MapInfo mapInfo = null;
@@ -28,6 +25,7 @@ public class AstarImpl4 implements Astar{
     List<Node> close2;
     long usedTime = 0;
     int spend = 0;
+    String mapName;
 
     List<Observer> observers = new ArrayList<>();
 
@@ -61,26 +59,34 @@ public class AstarImpl4 implements Astar{
     }
 
     @Override
-    public void loadMap() {
+    public void loadMap(String mapName) {
+        this.mapName = mapName;
         BufferedReader bufferedReader;
-        int[][] map = new int[70][40];
         try{
-            File file = new File("mat.txt");
+            File file = new File(mapName);
             InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(file));
             bufferedReader = new BufferedReader(inputStreamReader);
             String line;
-            int i=0;
+            int rows = 0;
+            List<String[]> str = new ArrayList<>();
             while((line = bufferedReader.readLine() )!= null){
-                String[] str = line.split(",");
-                for(int k = 0; k < str.length; k++){
-                    map[i][k] = Integer.parseInt(str[k]);
-                }
-                i++;
+                String[] temp = line.split(",");
+                rows++;
+                str.add(temp);
             }
+            int cols = str.get(0).length;
+
+            int[][] map = new int[rows][cols];
+            for(int i = 0; i < rows; i++){
+                for(int j = 0; j < cols; j++){
+                    String[] temp = str.get(i);
+                    map[i][j] = Integer.parseInt(temp[j]);
+                }
+            }
+            this.mapInfo = new MapInfo(map);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.mapInfo = new MapInfo(map);
     }
 
     @Override
@@ -100,7 +106,7 @@ public class AstarImpl4 implements Astar{
 
     @Override
     public void restart() {
-        loadMap();
+        loadMap(mapName);
         canFind = true;
         isEnd = false;
         spend = 0;

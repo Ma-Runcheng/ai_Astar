@@ -36,7 +36,7 @@ public class ButtonPanel extends JPanel{
         fileBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                File file = new File("mat.txt");
+                File file = new File("mat2.txt");
                 BufferedWriter bw;
                 try {
                     bw = new BufferedWriter(new FileWriter(file));
@@ -46,8 +46,8 @@ public class ButtonPanel extends JPanel{
                         else System.out.println("文件生成失败");
                     }
                     if(check()){
-                        for(int i = 0; i < 70; i++){
-                            for(int j = 0; j < 40; j++){
+                        for(int i = 0; i < 50; i++){
+                            for(int j = 0; j < 50; j++){
                                 bw.write(mapPanel.mapGrid[i][j]+",");
                             }
                             bw.write("\n");
@@ -62,8 +62,8 @@ public class ButtonPanel extends JPanel{
     }
 
     private boolean check() {
-        for(int i = 0; i < 70; i++){
-            for(int j = 0; j < 40; j++){
+        for(int i = 0; i < 50; i++){
+            for(int j = 0; j < 50; j++){
                 if(mapPanel.mapGrid[i][j] == 0){
                     return false;
                 }

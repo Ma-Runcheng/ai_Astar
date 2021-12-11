@@ -21,36 +21,44 @@ public class AstarImpl1 implements Astar {
     List<Node> closeList;
     long usedTime = 0;
     int spend = 0;
+    String GridName;
 
     List<Observer> observers = new ArrayList<>();
 
     public AstarImpl1() {
-        loadMap();
         openList = new PriorityQueue<>();
         closeList = new ArrayList<>();
     }
 
     @Override
-    public void loadMap() {
+    public void loadMap(String GridName) {
+        this.GridName = GridName;
         BufferedReader bufferedReader;
-        int[][] map = new int[70][40];
         try{
-            File file = new File("mat.txt");
+            File file = new File(GridName);
             InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(file));
             bufferedReader = new BufferedReader(inputStreamReader);
             String line;
-            int i=0;
+            int rows = 0;
+            List<String[]> str = new ArrayList<>();
             while((line = bufferedReader.readLine() )!= null){
-                String[] str = line.split(",");
-                for(int k = 0; k < str.length; k++){
-                    map[i][k] = Integer.parseInt(str[k]);
-                }
-                i++;
+                String[] temp = line.split(",");
+                rows++;
+                str.add(temp);
             }
+            int cols = str.get(0).length;
+
+            int[][] map = new int[rows][cols];
+            for(int i = 0; i < rows; i++){
+                for(int j = 0; j < cols; j++){
+                    String[] temp = str.get(i);
+                    map[i][j] = Integer.parseInt(temp[j]);
+                }
+            }
+            this.mapInfo = new MapInfo(map);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.mapInfo = new MapInfo(map);
     }
 
     @Override
@@ -146,7 +154,7 @@ public class AstarImpl1 implements Astar {
 
     @Override
     public void restart() {
-        loadMap();
+        loadMap(GridName);
         canFind = true;
         isEnd = false;
         spend = 0;
