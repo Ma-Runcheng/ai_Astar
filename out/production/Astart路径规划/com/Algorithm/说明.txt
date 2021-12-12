@@ -1,6 +1,0 @@
-算法类持有openList，closeList和mapInfo
-数组大小已经定义好了int[][] map = new int[70][40];
-程序首先会调用loadMap方法初始化地图（读取image包里面的mat.txt初始化二维数组）
-start方法为算法入口
-nextStep更新一步open，close
-找到结构后setRoute改写地图

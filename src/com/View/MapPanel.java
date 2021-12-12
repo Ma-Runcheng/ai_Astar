@@ -59,31 +59,31 @@ public class MapPanel extends JPanel implements Observer {
             for (int j = 0; j < mapInfo.COLS; j++) {
                 if(map[i][j] == 1 && showGrid){
                     g.setColor(Color.red);
-                    g.fillRect((int)(j*scaleX),(int)(i*scaleY),10,10);
+                    g.fillRect((int)(j*scaleX),(int)(i*scaleY),7,7);
                 }
                 if(map[i][j]==-1 && showGrid){
                     g.setColor(Color.gray);
-                    g.fillRect((int)(j*scaleX),(int)(i*scaleY),10,10);
+                    g.fillRect((int)(j*scaleX),(int)(i*scaleY),7,7);
                 }
                 if(map[i][j]==2){
                     g.setColor(Color.blue);
-                    g.fillRect((int)(j*scaleX),(int)(i*scaleY),10,10);
+                    g.fillRect((int)(j*scaleX),(int)(i*scaleY),7,7);
                 }
                 if(map[i][j]==3){
                     g.setColor(Color.green);
-                    g.fillRect((int)(j*scaleX),(int)(i*scaleY),10,10);
+                    g.fillRect((int)(j*scaleX),(int)(i*scaleY),7,7);
                 }
                 if(map[i][j]==4){
                     g.setColor(Color.yellow);
-                    g.fillRect((int)(j*scaleX),(int)(i*scaleY),10,10);
+                    g.fillRect((int)(j*scaleX),(int)(i*scaleY),7,7);
                 }
                 if(map[i][j]==5){
                     g.setColor(Color.magenta);
-                    g.fillRect((int)(j*scaleX),(int)(i*scaleY),10,10);
+                    g.fillRect((int)(j*scaleX),(int)(i*scaleY),7,7);
                 }
                 if(map[i][j]==6){
                     g.setColor(Color.black);
-                    g.fillRect((int)(j*scaleX),(int)(i*scaleY),10,10);
+                    g.fillRect((int)(j*scaleX),(int)(i*scaleY),7,7);
                 }
             }
         }
