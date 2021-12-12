@@ -12,16 +12,17 @@ import java.util.List;
 
 
 public class ButtonPanel extends JPanel implements Observable{
-    Astar astar;
-    ListPanel listPanel;
-    MapPanel mapPanel;
-    List<Observer> observers = new ArrayList<>();
+    public Astar astar;
+    public ListPanel listPanel;
+    public MapPanel mapPanel;
 
-    JButton begin = new JButton("确定起始位置");
-    JButton end = new JButton("确定终点位置");
-    JButton start = new JButton("开始算法");
-    JButton nextStep = new JButton("下一步");
-    JButton endStep = new JButton("显示全部");
+    private final JButton begin = new JButton("确定起始位置");
+    private final JButton end = new JButton("确定终点位置");
+    private final JButton start = new JButton("开始算法");
+    private final JButton nextStep = new JButton("下一步");
+    private final JButton endStep = new JButton("显示全部");
+
+    private final List<Observer> observers = new ArrayList<>();
 
     public ButtonPanel(Astar astar, ListPanel listPanel, MapPanel mapPanel) {
         this.astar = astar;
@@ -76,7 +77,6 @@ public class ButtonPanel extends JPanel implements Observable{
             observers.add(o);
         }
     }
-
 
     private class beginListener extends MouseAdapter {
         @Override

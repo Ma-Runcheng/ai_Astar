@@ -29,5 +29,4 @@ public interface Astar extends Observable{
     boolean isEnd();
     boolean canFind();
 
-    void restart();
 }

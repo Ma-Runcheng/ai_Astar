@@ -12,24 +12,15 @@ import java.awt.event.MouseEvent;
 import java.util.Objects;
 
 public class MapPanel extends JPanel implements Observer {
-    /*
-    map中 -1----路-------灰色
-          1----障碍------红色
-          2----结果路径-------蓝色
-          3----搜索中路径cur------中心绿色
-          4----cur的children------分布在绿色周围黄色
-          5----被选择状态------紫色
-          6----起始点和终点的颜色------黑色
-     */
-    ImageIcon icon = null;
-    Image mapImg = null;
-    String mapName;
-    Astar astar;
-    MapInfo mapInfo;
-    int count=0;
-    int posx,posy;  //此时选择的点的map数组坐标
-    double scaleX,scaleY;
-    boolean showGrid = true;
+    public Astar astar;
+    public MapInfo mapInfo;
+    private Image mapImg = null;
+    private String mapName;
+    public boolean showGrid = true;
+
+    private int count=0;
+    private int posx,posy;  //此时选a择的点的map数组坐标
+    private double scaleX,scaleY; //缩放比例
 
     public MapPanel(Astar astar,String mapName) {
         this.astar = astar;
@@ -45,7 +36,6 @@ public class MapPanel extends JPanel implements Observer {
                 super.mouseClicked(e);
                 posx = roundX(e.getX());//map[y][x]
                 posy = roundY(e.getY());
-                System.out.println(posx + " " + posy);
 
                 if(mapInfo.map[posy][posx] == 5){
                     mapInfo.map[posy][posx] = -1;
@@ -55,28 +45,8 @@ public class MapPanel extends JPanel implements Observer {
                     count++;
                 }
                 repaint();
-
             }
         });
-    }
-
-    private int roundX(int x){
-        return (int)(x / scaleX);
-    }
-    private int roundY(int y) {
-       return (int)(y/ scaleY);
-    }
-
-    public void loadMapImage(String mapName){
-        this.mapName = mapName;
-        this.icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/image/"+mapName)));
-        this.mapImg = icon.getImage();
-        update();
-    }
-
-    public void restart(){
-        this.mapInfo = astar.getMapInfo();
-        update();
     }
 
     @Override
@@ -117,6 +87,26 @@ public class MapPanel extends JPanel implements Observer {
                 }
             }
         }
+    }
+
+    private int roundX(int x){
+        return (int)(x / scaleX);
+    }
+
+    private int roundY(int y) {
+        return (int)(y/ scaleY);
+    }
+
+    public void loadMapImage(String mapName){
+        this.mapName = mapName;
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/image/" + mapName)));
+        this.mapImg = icon.getImage();
+        update();
+    }
+
+    public void restart(){
+        this.mapInfo = astar.getMapInfo();
+        update();
     }
 
     public void setAstar(Astar astar) {

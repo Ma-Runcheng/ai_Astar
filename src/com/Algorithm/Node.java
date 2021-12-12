@@ -32,7 +32,7 @@ public class Node implements Comparable<Node>{
         x = (endPos.pos.x > this.pos.x) ? (endPos.pos.x - this.pos.x) : (this.pos.x - endPos.pos.x);
         y = (endPos.pos.y > this.pos.y) ? (endPos.pos.y - this.pos.y) : (this.pos.y - endPos.pos.y);
         int diagonal = Math.min(x,y);//对角步数
-        int straight = x +y;//曼哈顿距离
+        int straight = x + y;//曼哈顿距离
         this.H  = 14 * diagonal + 10 * (straight - 2 * diagonal);
     }
 
@@ -59,11 +59,7 @@ public class Node implements Comparable<Node>{
     @Override
     public int compareTo(Node n) {
         if(n == null) return -1;
-        if (this.F > n.F)
-            return 1;
-        else if (this.F < n.F)
-            return -1;
-        return 0;
+        return this.F - n.F;
     }
 }
 

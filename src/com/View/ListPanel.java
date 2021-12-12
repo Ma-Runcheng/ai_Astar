@@ -11,19 +11,17 @@ import java.util.List;
 import java.util.Queue;
 
 public class ListPanel extends JPanel implements Observer{
-    Astar astar;
+    public Astar astar;
     public JTable table;
     public JScrollPane scrollPane;
-    Object[] head = {"OpenList","CloseList"};
-    Object[][] rowData =  new Object[2800][2800];
-    List<Node> closeList = null;
-    Queue<Node> openList = null;
 
     public ListPanel(Astar astar) {
         this.astar = astar;
         astar.register(this);
         setLayout(new BorderLayout());
-        table = new JTable(rowData,head);
+        Object[] head = {"OpenList", "CloseList"};
+        Object[][] rowData = new Object[2000][2000];
+        table = new JTable(rowData, head);
         scrollPane = new JScrollPane(table);
         add(scrollPane);
     }
@@ -35,8 +33,8 @@ public class ListPanel extends JPanel implements Observer{
 
     @Override
     public void update() {
-        openList = astar.getOpenList();
-        closeList = astar.getCloseList();
+        Queue<Node> openList = astar.getOpenList();
+        List<Node> closeList = astar.getCloseList();
         int index = 0;
         Object[] open = openList.toArray();
         Arrays.sort(open);

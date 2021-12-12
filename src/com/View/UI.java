@@ -8,8 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashSet;
-import java.util.Set;
 
 public class UI extends JFrame {
     public static final int WIDTH = 1150;
@@ -18,15 +16,14 @@ public class UI extends JFrame {
     public MapPanel mapPanel = null;
     public ListPanel listPanel = null;
     public ButtonPanel btnPanel = null;
+    private JMenuBar menuBar = null;
+
+    private final AiFactory factory = new AiFactory();
     public Astar astar = null;
     public MapInfo mapInfo = null;
-    private JMenuBar menuBar = null;
-    Set<Astar> usedAstar = new HashSet<>();
-    AiFactory factory = new AiFactory();
 
     String ImgName;
     String GridName;
-
 
     public UI(Astar astar){
         setSize(WIDTH,HEIGHT);
@@ -38,7 +35,6 @@ public class UI extends JFrame {
 
     private void initAlgorithm(Astar astar){
         this.astar = astar;
-        usedAstar.add(astar);
         initPanel();
         setVisible(true);
     }
@@ -57,16 +53,6 @@ public class UI extends JFrame {
         add(mapPanel,BorderLayout.CENTER);
         add(listPanel,BorderLayout.EAST);
         add(btnPanel,BorderLayout.SOUTH);
-    }
-
-    public void setAstar(Astar astar) {
-        this.astar = astar;
-        this.mapInfo = astar.getMapInfo();
-        usedAstar.add(astar);
-
-        mapPanel.setAstar(astar);
-        btnPanel.setAstar(astar);
-        listPanel.setAstar(astar);
     }
 
     private void initMenuBar(JMenuBar menuBar){
@@ -124,6 +110,15 @@ public class UI extends JFrame {
         this.menuBar.add(optionMenu);
     }
 
+    public void setAstar(Astar astar) {
+        this.astar = astar;
+        this.mapInfo = astar.getMapInfo();
+
+        mapPanel.setAstar(astar);
+        btnPanel.setAstar(astar);
+        listPanel.setAstar(astar);
+    }
+
     class AloSelectListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -140,10 +135,6 @@ public class UI extends JFrame {
     class startListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            /*for(Astar a : usedAstar){
-                a.restart();
-            }*/
-            usedAstar.clear();
             Astar astar = factory.getAi("对角距离");
             astar.loadMap(GridName);
             setAstar(astar);
@@ -184,8 +175,10 @@ public class UI extends JFrame {
             String name = item.getText();
             if("地图1".equals(name)){
                 astar.loadMap("mat1.txt");
+                GridName = "mat1.txt";
             }else if("地图2".equals(name)){
                 astar.loadMap("mat2.txt");
+                GridName = "mat2.txt";
             }
             mapPanel.update();
         }

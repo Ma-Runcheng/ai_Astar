@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Queue;
 
@@ -95,11 +94,6 @@ public class AstarImpl3 implements Astar {
     @Override
     public boolean canFind() {
         return false;
-    }
-
-    @Override
-    public void restart() {
-
     }
 
     @Override
