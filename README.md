@@ -1,2 +1,2 @@
 # ai_star_project
-4个男人的项目dev ver
+基于A*算法的最优路径规划系统
