@@ -69,7 +69,6 @@ public class UI extends JFrame {
 
         JMenuItem item1 = new JMenuItem("对角距离");
         JMenuItem item2 = new JMenuItem("曼哈顿距离");
-        JMenuItem item3 = new JMenuItem("迪杰斯特拉");
         JMenuItem item4 = new JMenuItem("双向对角");
         JMenuItem restart = new JMenuItem("重新开始");
         JMenuItem showGrid = new JMenuItem("显示/隐藏栅格");
@@ -87,7 +86,6 @@ public class UI extends JFrame {
 
         algorithmMenu.add(item1);
         algorithmMenu.add(item2);
-        algorithmMenu.add(item3);
         algorithmMenu.add(item4);
         optionMenu.add(restart);
         optionMenu.add(showGrid);
@@ -97,7 +95,6 @@ public class UI extends JFrame {
 
         item1.addActionListener(al);
         item2.addActionListener(al);
-        item3.addActionListener(al);
         item4.addActionListener(al);
         restart.addActionListener(sl);
         showGrid.addActionListener(gl);
