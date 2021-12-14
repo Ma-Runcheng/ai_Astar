@@ -135,7 +135,6 @@ public class UI extends JFrame {
             Astar astar = factory.getAi("对角距离");
             astar.loadMap(GridName);
             setAstar(astar);
-
             mapInfo = null;
             btnPanel.restart();
             mapPanel.restart();
