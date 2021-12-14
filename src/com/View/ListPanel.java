@@ -14,6 +14,8 @@ public class ListPanel extends JPanel implements Observer{
     public Astar astar;
     public JTable table;
     public JScrollPane scrollPane;
+    int lastOpenSize = 0;
+    int lastCloseSize = 0;
 
     public ListPanel(Astar astar) {
         this.astar = astar;
@@ -44,16 +46,20 @@ public class ListPanel extends JPanel implements Observer{
             String nodePos = "("+node.pos.x+","+node.pos.y+")"+"  F= "+node.F;
             table.getModel().setValueAt(nodePos,index++,0);
         }
-        while(index < 400){
-            table.getModel().setValueAt("",index++,0);
+        index--;
+        while(index < lastOpenSize && lastOpenSize >= 0){
+            table.getModel().setValueAt("",lastOpenSize--,0);
         }
+        lastOpenSize = index;
         index = 0;
         for(Node node : closeList){
             String nodePos = "("+node.pos.x+","+node.pos.y+")";
             table.getModel().setValueAt(nodePos,index++,1);
         }
-        while(index < 400){
-            table.getModel().setValueAt("",index++,1);
+        index--;
+        while(index < lastCloseSize && lastCloseSize >= 0){
+            table.getModel().setValueAt("",lastCloseSize--,1);
         }
+        lastCloseSize = index;
     }
 }
